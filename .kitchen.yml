@@ -1,0 +1,40 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+  environments_path: './environments/'
+  roles_path: './roles/'
+
+platforms:
+  - name: centos7
+    driver:
+      box: "matyunin/centos7"
+      #box: "as-vbox-centos7"
+      #box_url: "http://spacewalk.asv.local/pub/vagrant/as-centos-vbox.box"
+      box_url: "http://spacewalk.asv.local/pub/vagrant/as-vbox-centos7.box"
+      network:
+        #- ["private_network", {type: "dhcp"}]
+        #- ["public_network",  bridge: 'en1: Thunderbolt 1']
+      - ["private_network", {ip: "192.168.33.13"}]
+      customize:
+        memory: 2024
+        natdnshostresolver1: "on"
+        natdnsproxy1: "on"
+
+suites:
+  - name: default
+    #provisioner:
+  #    solo_rb:
+  #     environment: development
+        #environment: production
+    run_list:
+      #- role[es-docker-cluster]
+      #- recipe[docker-host::default]
+      - recipe[systemd::default]
+      #- recipe[docker-host::etcd5]
+      #- recipe[docker-host::ssh]
+    data_bags_path: "./data_bags" 
+    #attributes: 
+

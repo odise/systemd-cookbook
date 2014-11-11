@@ -1,0 +1,37 @@
+[Unit]
+Description=<%= @description %>
+
+[Service]
+<% if @user -%>
+User=<%= @user %>
+<% end %>
+<% if @timeoutstartsec -%>
+TimeoutStartSec=<%= @timeoutstartsec %>
+<% end %>
+<% @execprestart.each do |key, value| -%>
+ExecStartPre=<%= key %>=<%= value %>
+<% end %>
+<% @environment.each do |key, value| -%>
+Environment=<%= key %>=<%= value %>
+<% end %>
+ExecStart=<%= @execstart %>
+ExecStop=<%= @execstop %>
+<% @execstartpost.each do |key, value| -%>
+ExecStartPost=<%= key %>=<%= value %>
+<% end %>
+<% @execstoppost.each do |key, value| -%>
+ExecStopPost=<%= key %>=<%= value %>
+<% end %>
+<% if @execreload -%>
+ExecReload=<%= @execreload %>
+<% end %>
+
+[Install]
+WantedBy=multi-user.target
+
+<% if @xfleet.length > 0 -%>
+[X-Fleet]
+<% end %>
+<% @xfleet.each do |key, value| -%>
+<%= key %>=<%= value %>
+<% end %>
