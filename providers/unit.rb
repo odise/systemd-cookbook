@@ -26,7 +26,7 @@ action :add do
     variables(
       :execstop => new_resource.execstop,
       :execstart => new_resource.execstart,
-      :execstartpre => new_resource.execprestart,
+      :execstartpre => new_resource.execstartpre,
       :execstoppost => new_resource.execstoppost,
       :execstartpost => new_resource.execstartpost,
       :environment => new_resource.environment,
