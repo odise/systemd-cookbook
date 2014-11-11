@@ -36,8 +36,8 @@ action :add do
       :xfleet => new_resource.xfleet,
       :execreload => new_resource.execreload,
     )
+    notifies :run, 'execute[systemctl-daemon-reload]', :immediately
     if (new_resource.activate)
-      notifies :run, 'execute[systemctl-daemon-reload]', :immediately
       notifies :enable, "service[#{new_resource.name}]", :immediately
       notifies :restart, "service[#{new_resource.name}]", :immediately
     end
