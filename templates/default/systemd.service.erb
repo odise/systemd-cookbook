@@ -8,19 +8,19 @@ User=<%= @user %>
 <% if @timeoutstartsec -%>
 TimeoutStartSec=<%= @timeoutstartsec %>
 <% end %>
-<% @execprestart.each do |key, value| -%>
-ExecStartPre=<%= key %>=<%= value %>
+<% @execstartpre.each do |value| -%>
+ExecStartPre=<%= value %>
 <% end %>
 <% @environment.each do |key, value| -%>
 Environment=<%= key %>=<%= value %>
 <% end %>
 ExecStart=<%= @execstart %>
 ExecStop=<%= @execstop %>
-<% @execstartpost.each do |key, value| -%>
-ExecStartPost=<%= key %>=<%= value %>
+<% @execstartpost.each do |value| -%>
+ExecStartPost=<%= value %>
 <% end %>
-<% @execstoppost.each do |key, value| -%>
-ExecStopPost=<%= key %>=<%= value %>
+<% @execstoppost.each do |value| -%>
+ExecStopPost=<%= value %>
 <% end %>
 <% if @execreload -%>
 ExecReload=<%= @execreload %>

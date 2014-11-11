@@ -4,9 +4,9 @@ default_action :add if defined?(default_action)
 
 attribute :name, :kind_of => String, :name_attribute => true
 
-attribute :execprestart, :kind_of => Hash, :required => false, :default => {}
-attribute :execstartpost, :kind_of => Hash, :required => false, :default => {}
-attribute :execstoppost, :kind_of => Hash, :required => false, :default => {}
+attribute :execstartpre, :kind_of => Array, :required => false, :default => []
+attribute :execstartpost, :kind_of => Array, :required => false, :default => []
+attribute :execstoppost, :kind_of => Array, :required => false, :default => []
 attribute :environment, :kind_of => Hash, :required => false, :default => {}
 attribute :xfleet, :kind_of => Hash, :required => false, :default => {}
 
