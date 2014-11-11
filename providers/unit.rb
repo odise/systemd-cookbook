@@ -41,6 +41,7 @@ action :add do
       notifies :enable, "service[#{new_resource.name}]", :immediately
       notifies :restart, "service[#{new_resource.name}]", :immediately
     end
+    cookbook "systemd"
   end
   new_resource.updated_by_last_action(false)
 end
