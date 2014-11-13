@@ -6,9 +6,9 @@ Requires=<%= value %>
 <% @after.each do |value| -%>
 After=<%= value %>
 <% end %>
-<% @before.each do |value| -%>
+<% if @before -%><% @before.each do |value| -%>
 Before=<%= value %>
-<% end %>
+<% end %><% end %>
 
 [Service]
 <% if @user -%>
@@ -23,8 +23,6 @@ ExecStartPre=<%= value %>
 <% @environment.each do |key, value| -%>
 Environment=<%= key %>=<%= value %>
 <% end %>
-ExecStart=<%= @execstart %>
-ExecStop=<%= @execstop %>
 <% @execstartpost.each do |value| -%>
 ExecStartPost=<%= value %>
 <% end %>
@@ -37,6 +35,8 @@ ExecReload=<%= @execreload %>
 <% if @killmode -%>
 KillMode=<%= @killmode %>
 <% end %>
+ExecStart=<%= @execstart %>
+ExecStop=<%= @execstop %>
 
 [Install]
 WantedBy=multi-user.target

@@ -19,10 +19,17 @@ action :add do
     action :nothing
   end
 
-  template "#{node["systemd"]["servicedir"]}/#{new_resource.name}" do
+  directory node["systemd"]["servicedir"]["path"] do
+    owner node["systemd"]["servicedir"]["owner"]
+    group node["systemd"]["servicedir"]["group"]
+    recursive true
+  end if node["systemd"]["servicedir"]["create"]
+
+  template "#{node["systemd"]["servicedir"]["path"]}/#{new_resource.name}" do
     source "systemd.service.erb"
-    owner "root"
-    mode 00600
+    owner node["systemd"]["servicedir"]["owner"]
+    group node["systemd"]["servicedir"]["group"]
+    mode node["systemd"]["servicedir"]["mode"]
     variables(
       :execstop => new_resource.execstop,
       :execstart => new_resource.execstart,
@@ -51,8 +58,8 @@ action :add do
 end
 
 action :remove do
-  if ::File.exists?("#{node["systemd"]["servicedir"]}/#{new_resource.name}")
-    Chef::Log.debug "Removing #{new_resource.name} from #{node["systemd"]["servicedir"]}"
+  if ::File.exists?("#{node["systemd"]["servicedir"]['path']}/#{new_resource.name}")
+    Chef::Log.debug "Removing #{new_resource.name} from #{node["systemd"]["servicedir"]['path']}"
 
   execute 'systemctl-daemon-reload' do
     command '/bin/systemctl --system daemon-reload'
@@ -68,7 +75,7 @@ action :remove do
     end
   end
 
-  file "#{node["systemd"]["servicedir"]}/#{new_resource.name}" do
+  file "#{node["systemd"]["servicedir"]['path']}/#{new_resource.name}" do
     action :delete
     if (new_resource.activate)
       notifies :run, 'execute[systemctl-daemon-reload]', :immediately

@@ -4,9 +4,9 @@ default_action :add if defined?(default_action)
 
 attribute :name, :kind_of => String, :name_attribute => true
 
-attribute :requires, :kind_of => Array, :required => false
-attribute :before, :kind_of => Array, :required => false
-attribute :after, :kind_of => Array, :required => false
+attribute :requires, :kind_of => Array, :required => false, :default => []
+attribute :after, :kind_of => Array, :required => false, :default => []
+attribute :before, :kind_of => Array, :required => false, :default => []
 attribute :execstartpre, :kind_of => Array, :required => false, :default => []
 attribute :execstartpost, :kind_of => Array, :required => false, :default => []
 attribute :execstoppost, :kind_of => Array, :required => false, :default => []
