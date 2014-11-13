@@ -6,6 +6,15 @@ Requires=<%= value %>
 <% @after.each do |value| -%>
 After=<%= value %>
 <% end %>
+<% @bindsto.each do |value| -%>
+BindsTo=<%= value %>
+<% end %>
+<% @partof.each do |value| -%>
+PartOf=<%= value %>
+<% end %>
+<% @wants.each do |value| -%>
+Wants=<%= value %>
+<% end %>
 <% if @before -%><% @before.each do |value| -%>
 Before=<%= value %>
 <% end %><% end %>

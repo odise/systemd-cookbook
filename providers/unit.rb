@@ -45,6 +45,9 @@ action :add do
       :requires => new_resource.requires,
       :before => new_resource.before,
       :after => new_resource.after,
+      :bindsto => new_resource.bindsto,
+      :wants => new_resource.wants,
+      :partof=> new_resource.partof,
       :killmode => new_resource.killmode,
     )
     notifies :run, 'execute[systemctl-daemon-reload]', :immediately
