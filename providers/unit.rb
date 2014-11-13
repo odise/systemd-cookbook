@@ -35,6 +35,10 @@ action :add do
       :timeoutstartsec => new_resource.timeoutstartsec,
       :xfleet => new_resource.xfleet,
       :execreload => new_resource.execreload,
+      :requires => new_resource.requires,
+      :before => new_resource.before,
+      :after => new_resource.after,
+      :killmode => new_resource.killmode,
     )
     notifies :run, 'execute[systemctl-daemon-reload]', :immediately
     if (new_resource.activate)

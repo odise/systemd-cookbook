@@ -1,5 +1,14 @@
 [Unit]
 Description=<%= @description %>
+<% @requires.each do |value| -%>
+Requires=<%= value %>
+<% end %>
+<% @after.each do |value| -%>
+After=<%= value %>
+<% end %>
+<% @before.each do |value| -%>
+Before=<%= value %>
+<% end %>
 
 [Service]
 <% if @user -%>
@@ -24,6 +33,9 @@ ExecStopPost=<%= value %>
 <% end %>
 <% if @execreload -%>
 ExecReload=<%= @execreload %>
+<% end %>
+<% if @killmode -%>
+KillMode=<%= @killmode %>
 <% end %>
 
 [Install]
