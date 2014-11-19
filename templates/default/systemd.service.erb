@@ -44,8 +44,10 @@ ExecReload=<%= @execreload %>
 <% if @killmode -%>
 KillMode=<%= @killmode %>
 <% end %>
-ExecStart=<%= @execstart %>
+<% if @execstop -%>
 ExecStop=<%= @execstop %>
+<% end %>
+ExecStart=<%= @execstart %>
 
 [Install]
 WantedBy=multi-user.target
