@@ -25,7 +25,12 @@ action :add do
     recursive true
   end if node["systemd"]["servicedir"]["create"]
 
-  template "#{node["systemd"]["servicedir"]["path"]}/#{new_resource.name}" do
+  template new_resource.name do
+    if new_resource.deploypath
+      path "#{new_resource.deploypath}/#{new_resource.name}"
+    else
+      path "#{node["systemd"]["servicedir"]["path"]}/#{new_resource.name}"
+    end
     source "systemd.service.erb"
     owner node["systemd"]["servicedir"]["owner"]
     group node["systemd"]["servicedir"]["group"]

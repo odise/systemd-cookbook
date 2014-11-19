@@ -24,4 +24,7 @@ attribute :execstop, :kind_of => String, :required => true
 attribute :execreload, :kind_of => String, :required => false
 attribute :killmode, :kind_of => String, :required => false
 
+# activate the service
 attribute :activate, :kind_of => [TrueClass, FalseClass], :required => false, :default => false
+# define a path to were the unit file will be deployed
+attribute :deploypath, :kind_of => String, :required => false
