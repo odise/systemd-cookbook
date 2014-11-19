@@ -20,7 +20,7 @@ attribute :user, :kind_of => String, :required => false
 attribute :description, :kind_of => String, :required => false, :default => "Dummy description"
 attribute :timeoutstartsec, :kind_of => String, :required => false, :default => "1800s"
 attribute :execstart, :kind_of => String, :required => true
-attribute :execstop, :kind_of => String, :required => true
+attribute :execstop, :kind_of => String, :required => false
 attribute :execreload, :kind_of => String, :required => false
 attribute :killmode, :kind_of => String, :required => false
 
