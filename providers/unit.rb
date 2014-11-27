@@ -44,6 +44,7 @@ action :add do
       :wants => new_resource.wants,
       :partof=> new_resource.partof,
       :killmode => new_resource.killmode,
+      :restart => new_resource.restart,
     )
     cookbook "systemd"
     action :create

@@ -44,6 +44,9 @@ ExecReload=<%= @execreload %>
 <% if @killmode -%>
 KillMode=<%= @killmode %>
 <% end %>
+<% if @restart -%>
+Restart=<%= @restart %>
+<% end %>
 <% if @execstop -%>
 ExecStop=<%= @execstop %>
 <% end %>

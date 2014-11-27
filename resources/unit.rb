@@ -23,6 +23,7 @@ attribute :execstart, :kind_of => String, :required => true
 attribute :execstop, :kind_of => String, :required => false
 attribute :execreload, :kind_of => String, :required => false
 attribute :killmode, :kind_of => String, :required => false
+attribute :restart, :kind_of => String, :required => false, :equal_to => ['no', 'on-success', 'on-failure', 'on-abnormal', 'on-watchdog', 'on-abort', 'always']
 
 # activate the service
 attribute :activate, :kind_of => [TrueClass, FalseClass], :required => false, :default => false
