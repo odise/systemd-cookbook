@@ -1,68 +1,38 @@
-. Cookbook
+systemd-cookbook
 ==========
-TODO: Enter the cookbook description here.
-
-e.g.
-This cookbook makes your favorite breakfast sandwich.
+Chef cookbook to create [Systemd service unit](http://www.freedesktop.org/software/systemd/man/systemd.service.html) files.
 
 Requirements
 ------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
 
-e.g.
-#### packages
-- `toaster` - . needs toaster to brown your bagel.
+- Chef 11
 
 Attributes
 ----------
-TODO: List your cookbook attributes here.
 
-e.g.
-#### .::default
-<table>
-  <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td><tt>['.']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
-  </tr>
-</table>
+|Key|Dfault|Description|
+|---|------|-----------|
+| ["systemd"]["servicedir"]["path"] | "/etc/systemd/system" | Directory to store the unit file in if `deploypath` is not provided in the resource. |
+| ["systemd"]["servicedir"]["create"] | true | Create directory if not exists. |
+| ["systemd"]["servicedir"]["owner"]  | "root" | Owner of the directory. |
+| ["systemd"]["servicedir"]["group"] | "root" | Group of the directory. |
+| ["systemd"]["servicedir"]["mode"] | "00600" | Permission of the directory. |
 
 Usage
 -----
-#### .::default
-TODO: Write usage instructions for each cookbook.
 
-e.g.
-Just include `.` in your node's `run_list`:
+Define the unit file as a ~systemd_unit` resource in your cookbook. Have a look at the [unit LWRP](https://github.com/odise/systemd-cookbook/blob/master/resources/unit.rb) for parameters implemented at the moment.
 
-```json
-{
-  "name":"my_node",
-  "run_list": [
-    "recipe[.]"
-  ]
-}
 ```
+execute 'systemctl-daemon-reload' do
+  command '/bin/systemctl --system daemon-reload'
+  action :nothing
+end
 
-Contributing
-------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
-
-e.g.
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write your change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
-
-License and Authors
--------------------
-Authors: TODO: List authors
+systemd_unit 'test.service' do
+  execstart "/bin/true"
+  execstop "/bin/true"
+  deploypath "/tmp"
+  notifies :run, 'execute[systemctl-daemon-reload]', :immediately
+end
+```
