@@ -1,5 +1,3 @@
-# create a systemd unit file and optionaly enable it
-
 def whyrun_supported?
   true
 end
@@ -7,41 +5,47 @@ end
 use_inline_resources
 
 action :add do
-  Chef::Log.debug "Adding systemd unit file for #{new_resource.name}"
+  Chef::Log.debug "Adding Upstart config file for #{new_resource.name}"
 
-  directory node["systemd"]["servicedir"]["path"] do
-    owner node["systemd"]["servicedir"]["owner"]
-    group node["systemd"]["servicedir"]["group"]
+  directory node["upstart"]["servicedir"]["path"] do
+    owner node["upstart"]["servicedir"]["owner"]
+    group node["upstart"]["servicedir"]["group"]
     recursive true
-  end if node["systemd"]["servicedir"]["create"]
+  end if node["upstart"]["servicedir"]["create"]
 
   template new_resource.name do
     if new_resource.deploypath
       path "#{new_resource.deploypath}/#{new_resource.name}"
     else
-      path "#{node["systemd"]["servicedir"]["path"]}/#{new_resource.name}"
+      path "#{node["upstart"]["servicedir"]["path"]}/#{new_resource.name}"
     end
-    source "systemd.service.erb"
-    owner node["systemd"]["servicedir"]["owner"]
-    group node["systemd"]["servicedir"]["group"]
-    mode node["systemd"]["servicedir"]["mode"]
+    source "upstart.conf.erb"
+    owner node["upstart"]["servicedir"]["owner"]
+    group node["upstart"]["servicedir"]["group"]
+    mode node["upstart"]["servicedir"]["mode"]
     variables(
+      #pre-stop
       :execstop => new_resource.execstop,
+      # script
       :execstart => new_resource.execstart,
+      # pre-start
       :execstartpre => new_resource.execstartpre,
+      # post-stop
       :execstoppost => new_resource.execstoppost,
+      # post-start
       :execstartpost => new_resource.execstartpost,
+      # env/export dict
       :environment => new_resource.environment,
+      # setuid
       :user => new_resource.user,
+      # description
       :description => new_resource.description,
+      # not supported
       :timeoutstartsec => new_resource.timeoutstartsec,
+      # reload: XXX remove
       :execreload => new_resource.execreload,
-      :requires => new_resource.requires,
-      :before => new_resource.before,
-      :after => new_resource.after,
-      :bindsto => new_resource.bindsto,
-      :wants => new_resource.wants,
-      :partof=> new_resource.partof,
+      :starton => new_resource.starton,
+      :stopon => new_resource.stopon,
       :killmode => new_resource.killmode,
       :restart => new_resource.restart,
     )
@@ -52,3 +56,4 @@ end
 
 action :remove do
 end
+

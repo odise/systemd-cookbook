@@ -1,23 +1,23 @@
 [Unit]
 Description=<%= @description %>
-<% @requires.each do |value| -%>
-Requires=<%= value %>
+<% if @requires -%>
+Requires=<%= @requires %>
 <% end %>
-<% @after.each do |value| -%>
-After=<%= value %>
+<% if @after -%>
+After=<%= @after %>
 <% end %>
-<% @bindsto.each do |value| -%>
-BindsTo=<%= value %>
+<% if @bindsto -%>
+BindsTo=<%= @bindsto %>
 <% end %>
-<% @partof.each do |value| -%>
-PartOf=<%= value %>
+<% if @partof -%>
+PartOf=<%= @partof %>
 <% end %>
-<% @wants.each do |value| -%>
-Wants=<%= value %>
+<% if @wants -%>
+Wants=<%= @wants %>
 <% end %>
-<% if @before -%><% @before.each do |value| -%>
-Before=<%= value %>
-<% end %><% end %>
+<% if @before -%>
+Before=<%= @before %>
+<% end %>
 
 [Service]
 <% if @user -%>
@@ -26,17 +26,17 @@ User=<%= @user %>
 <% if @timeoutstartsec -%>
 TimeoutStartSec=<%= @timeoutstartsec %>
 <% end %>
-<% @execstartpre.each do |value| -%>
-ExecStartPre=<%= value %>
+<% if @execstartpre -%>
+ExecStartPre=<%= @execstartpre %>
 <% end %>
 <% @environment.each do |key, value| -%>
 Environment=<%= key %>=<%= value %>
 <% end %>
-<% @execstartpost.each do |value| -%>
-ExecStartPost=<%= value %>
+<% if @execstartpost -%>
+ExecStartPost=<%= @execstartpost %>
 <% end %>
-<% @execstoppost.each do |value| -%>
-ExecStopPost=<%= value %>
+<% if @execstoppost -%>
+ExecStopPost=<%= @execstoppost %>
 <% end %>
 <% if @execreload -%>
 ExecReload=<%= @execreload %>
@@ -54,10 +54,3 @@ ExecStart=<%= @execstart %>
 
 [Install]
 WantedBy=multi-user.target
-
-<% if @xfleet.length > 0 -%>
-[X-Fleet]
-<% end %>
-<% @xfleet.each do |key, value| -%>
-<%= key %>=<%= value %>
-<% end %>
