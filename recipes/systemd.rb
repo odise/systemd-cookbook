@@ -4,6 +4,8 @@ case node['platform']
 
       if node['systemd']['update']
 
+        # curl --silent -H'Accept: text/plain' \
+        #  'http://localhost:19531/entries?follow&_SYSTEMD_UNIT=container-test.service&_SYSTEMD_UNIT=docker.service'
         remote_file "/etc/yum.repos.d/lnykryn-systemd-epel-7.repo" do
           source "https://copr.fedoraproject.org/coprs/lnykryn/systemd/repo/epel-7/lnykryn-systemd-epel-7.repo"
         end
