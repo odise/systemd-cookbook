@@ -1,3 +1,4 @@
+default['systemd']['update'] = false
 default["systemd"]["servicedir"]["path"] = "/etc/systemd/system"
 default["systemd"]["servicedir"]["create"] = true
 default["systemd"]["servicedir"]["owner"] = "root"
