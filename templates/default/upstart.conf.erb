@@ -1,0 +1,46 @@
+description "<%= @description %>"
+
+<% if @starton -%>
+start on <%= @starton %>
+<% end %>
+<% if @stopon -%>
+stop on <%= @stopon %>
+<% end %>
+
+#expect fork
+<% if @restart != 'no' -%>
+<% if @timeoutstartsec -%>
+respawn limit 100 <%= @timeoutstartsec %>
+<% else -%>
+respawn
+<% end %> <% end %>
+
+<% @environment.each do |key, value| -%>
+env <%= key %>=<%= value %>
+export <%= key %>
+<% end %>
+
+<% if @execstartpre -%>
+pre-start script
+<%= @execstartpre %>
+end script
+<% end %>
+script
+<%= @execstart %>
+end script
+<% if @execstartpost -%>
+post-start script
+<%= @execstartpost %>
+end script
+<% end %>
+<% if @execstop -%>
+pre-stop script
+<%=  @execstop %>
+end script
+<% end %>
+<% if @execstoppost -%>
+post-stop script
+<%= @execstoppost %>
+end script
+<% end %>
+
