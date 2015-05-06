@@ -55,5 +55,34 @@ action :add do
 end
 
 action :remove do
+  if new_resource.deploypath
+    path = "#{new_resource.deploypath}/#{new_resource.name}"
+  else
+    path = "#{node["upstart"]["servicedir"]["path"]}/#{new_resource.name}"
+  end
+
+  file path do
+    action :delete
+  end
 end
 
+action :start do
+  execute new_resource.name do
+    command "/sbin/initctl start #{new_resource.name}"
+    action :run
+  end
+end
+
+action :restart do
+  execute new_resource.name do
+    command "/sbin/initctl restart #{new_resource.name}"
+    action :run
+  end
+end
+
+action :stop do
+  execute new_resource.name do
+    command "/sbin/initctl stop #{new_resource.name}"
+    action :run
+  end
+end

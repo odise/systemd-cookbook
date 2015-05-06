@@ -6,6 +6,19 @@ end
 
 use_inline_resources
 
+def reload()
+  cmdStr = '/bin/systemctl --system daemon-reload'
+  cmd = Mixlib::ShellOut.new(cmdStr)
+  cmd.run_command
+  Chef::Log.debug "rabbitmq_user_exists?: #{cmd.stdout}"
+  begin
+    cmd.error!
+    true
+  rescue
+    false
+  end
+end
+
 action :add do
   Chef::Log.debug "Adding systemd unit file for #{new_resource.name}"
 
@@ -51,4 +64,35 @@ action :add do
 end
 
 action :remove do
+  if new_resource.deploypath
+    path = "#{new_resource.deploypath}/#{new_resource.name}"
+  else
+    path = "#{node["systemd"]["servicedir"]["path"]}/#{new_resource.name}"
+  end
+
+  file path do
+    action :delete
+  end
+  reload
+end
+
+action :start do
+  execute new_resource.name do
+    command "/bin/systemctl start #{new_resource.name}"
+    action :run
+  end
+end
+
+action :restart do
+  execute new_resource.name do
+    command "/bin/systemctl restart #{new_resource.name}"
+    action :run
+  end
+end
+
+action :stop do
+  execute new_resource.name do
+    command "/bin/systemctl stop #{new_resource.name}"
+    action :run
+  end
 end

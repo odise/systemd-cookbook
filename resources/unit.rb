@@ -1,5 +1,5 @@
 
-actions :add, :remove
+actions :add, :remove, :start, :restart, :stop, :enable, :disable
 default_action :add if defined?(default_action)
 
 attribute :name, :kind_of => String, :name_attribute => true
