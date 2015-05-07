@@ -71,7 +71,7 @@ action :start do
     action :start
     case node['platform']
       # UBUNTU 14.04
-      when 'debian', 'ubuntu'
+      when 'debian', 'ubuntu', 'amazon'
         provider Chef::Provider::Service::Upstart
     end
   end
@@ -85,7 +85,7 @@ action :restart do
     action :stop
     case node['platform']
       # UBUNTU 14.04
-      when 'debian', 'ubuntu'
+      when 'debian', 'ubuntu', 'amazon'
         provider Chef::Provider::Service::Upstart
     end
   end
@@ -93,7 +93,7 @@ action :restart do
     action :start
     case node['platform']
       # UBUNTU 14.04
-      when 'debian', 'ubuntu'
+      when 'debian', 'ubuntu', 'amazon'
         provider Chef::Provider::Service::Upstart
     end
   end
@@ -104,7 +104,7 @@ action :stop do
     action :stop
     case node['platform']
       # UBUNTU 14.04
-      when 'debian', 'ubuntu'
+      when 'debian', 'ubuntu', 'amazon'
         provider Chef::Provider::Service::Upstart
     end
   end
