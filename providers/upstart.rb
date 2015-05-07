@@ -67,22 +67,45 @@ action :remove do
 end
 
 action :start do
-  execute new_resource.name do
-    command "/sbin/initctl start #{new_resource.name}"
-    action :run
+  service new_resource.name do
+    action :start
+    case node['platform']
+      # UBUNTU 14.04
+      when 'debian', 'ubuntu'
+        provider Chef::Provider::Service::Upstart
+    end
   end
 end
 
 action :restart do
-  execute new_resource.name do
-    command "/sbin/initctl restart #{new_resource.name}"
-    action :run
+  # this is implemented to be stop/start instead of restart due 
+  # to the fact that only stoping the unit forces Upstart to 
+  # reload the configuration
+  service new_resource.name do
+    action :stop
+    case node['platform']
+      # UBUNTU 14.04
+      when 'debian', 'ubuntu'
+        provider Chef::Provider::Service::Upstart
+    end
+  end
+  service new_resource.name do
+    action :start
+    case node['platform']
+      # UBUNTU 14.04
+      when 'debian', 'ubuntu'
+        provider Chef::Provider::Service::Upstart
+    end
   end
 end
 
 action :stop do
-  execute new_resource.name do
-    command "/sbin/initctl stop #{new_resource.name}"
-    action :run
+  service new_resource.name do
+    action :stop
+    case node['platform']
+      # UBUNTU 14.04
+      when 'debian', 'ubuntu'
+        provider Chef::Provider::Service::Upstart
+    end
   end
 end
