@@ -15,9 +15,9 @@ action :add do
 
   template new_resource.name do
     if new_resource.deploypath
-      path "#{new_resource.deploypath}/#{new_resource.name}"
+      path "#{new_resource.deploypath}/#{new_resource.name}.conf"
     else
-      path "#{node["upstart"]["servicedir"]["path"]}/#{new_resource.name}"
+      path "#{node["upstart"]["servicedir"]["path"]}/#{new_resource.name}.conf"
     end
     source "upstart.conf.erb"
     owner node["upstart"]["servicedir"]["owner"]
@@ -56,9 +56,9 @@ end
 
 action :remove do
   if new_resource.deploypath
-    path = "#{new_resource.deploypath}/#{new_resource.name}"
+    path = "#{new_resource.deploypath}/#{new_resource.name}.conf"
   else
-    path = "#{node["upstart"]["servicedir"]["path"]}/#{new_resource.name}"
+    path = "#{node["upstart"]["servicedir"]["path"]}/#{new_resource.name}.conf"
   end
 
   file path do

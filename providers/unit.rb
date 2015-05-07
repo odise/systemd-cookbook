@@ -30,9 +30,9 @@ action :add do
 
   template new_resource.name do
     if new_resource.deploypath
-      path "#{new_resource.deploypath}/#{new_resource.name}"
+      path "#{new_resource.deploypath}/#{new_resource.name}.service"
     else
-      path "#{node["systemd"]["servicedir"]["path"]}/#{new_resource.name}"
+      path "#{node["systemd"]["servicedir"]["path"]}/#{new_resource.name}.service"
     end
     source "systemd.service.erb"
     owner node["systemd"]["servicedir"]["owner"]
@@ -65,9 +65,9 @@ end
 
 action :remove do
   if new_resource.deploypath
-    path = "#{new_resource.deploypath}/#{new_resource.name}"
+    path = "#{new_resource.deploypath}/#{new_resource.name}.service"
   else
-    path = "#{node["systemd"]["servicedir"]["path"]}/#{new_resource.name}"
+    path = "#{node["systemd"]["servicedir"]["path"]}/#{new_resource.name}.service"
   end
 
   file path do
