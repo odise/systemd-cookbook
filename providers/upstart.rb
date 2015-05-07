@@ -69,11 +69,7 @@ end
 action :start do
   service new_resource.name do
     action :start
-    case node['platform']
-      # UBUNTU 14.04
-      when 'debian', 'ubuntu', 'amazon'
-        provider Chef::Provider::Service::Upstart
-    end
+    provider Chef::Provider::Service::Upstart
   end
 end
 
@@ -83,29 +79,21 @@ action :restart do
   # reload the configuration
   service new_resource.name do
     action :stop
-    case node['platform']
-      # UBUNTU 14.04
-      when 'debian', 'ubuntu', 'amazon'
-        provider Chef::Provider::Service::Upstart
-    end
+    provider Chef::Provider::Service::Upstart
+  end
+  execute "sleep before #{new_resource.name} restart" do
+    command "sleep 2"
   end
   service new_resource.name do
     action :start
-    case node['platform']
-      # UBUNTU 14.04
-      when 'debian', 'ubuntu', 'amazon'
-        provider Chef::Provider::Service::Upstart
-    end
+    provider Chef::Provider::Service::Upstart
+    #not_if "/sbin/status #{new_resource.name} | grep \"#{new_resource.name} start/running\""
   end
 end
 
 action :stop do
   service new_resource.name do
     action :stop
-    case node['platform']
-      # UBUNTU 14.04
-      when 'debian', 'ubuntu', 'amazon'
-        provider Chef::Provider::Service::Upstart
-    end
+    provider Chef::Provider::Service::Upstart
   end
 end
