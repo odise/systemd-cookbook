@@ -4,12 +4,12 @@ default_action :add if defined?(default_action)
 
 attribute :name, :kind_of => String, :name_attribute => true
 
-attribute :requires, :kind_of => String, :required => false
-attribute :after, :kind_of => String, :required => false
-attribute :before, :kind_of => String, :required => false
-attribute :bindsto, :kind_of => String, :required => false
-attribute :wants, :kind_of => String, :required => false
-attribute :partof, :kind_of => String, :required => false
+attribute :requires, :kind_of => Array, :required => false
+attribute :after, :kind_of => Array, :required => false
+attribute :before, :kind_of => Array, :required => false
+attribute :bindsto, :kind_of => Array, :required => false
+attribute :wants, :kind_of => Array, :required => false
+attribute :partof, :kind_of => Array, :required => false
 
 attribute :execstartpre, :kind_of => String, :required => false
 attribute :execstartpost, :kind_of => String, :required => false

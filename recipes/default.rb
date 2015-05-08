@@ -17,8 +17,8 @@ case node['platform']
     end
 
     systemd_unit 'container-test.service' do
-      after 'docker.service'
-      requires 'docker.service'
+      after ['docker.service']
+      requires ['docker.service']
       execstartpre <<-EOF
         -/usr/bin/docker rm -f test
       EOF
@@ -36,8 +36,8 @@ case node['platform']
     end
 
     systemd_unit 'container-dependency.service' do
-      after 'container-test.service'
-      requires 'container-test.service'
+      after ['container-test.service']
+      requires ['container-test.service']
       execstartpre <<-EOF
         /usr/bin/docker rm -f dependency || true
       EOF
@@ -63,8 +63,8 @@ case node['platform']
   when 'debian', 'ubuntu'
 
     systemd_upstart 'container-test.conf' do
-      starton "started docker"
-      stopon "stopping docker"
+      starton ["docker"]
+      stopon ["docker"]
       execstartpre <<-EOF
         /usr/bin/docker rm -f test || true
       EOF
@@ -81,8 +81,8 @@ case node['platform']
     end
 
     systemd_upstart 'container-dependency.conf' do
-      starton "started container-test "
-      stopon "stopping container-test"
+      starton ["container-test "]
+      stopon ["container-test"]
       execstartpre <<-EOF
         /usr/bin/docker rm -f dependency || true
       EOF
@@ -99,8 +99,8 @@ case node['platform']
     end
 
     systemd_upstart 'logspout.conf' do
-      starton "started docker"
-      stopon "stopping docker"
+      starton ["docker"]
+      stopon ["docker"]
       execstartpre <<-EOF
         /usr/bin/docker rm -f logspout || true
       EOF

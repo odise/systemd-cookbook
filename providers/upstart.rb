@@ -44,8 +44,8 @@ action :add do
       :timeoutstartsec => new_resource.timeoutstartsec,
       # reload: XXX remove
       :execreload => new_resource.execreload,
-      :starton => new_resource.starton,
-      :stopon => new_resource.stopon,
+      :starton => combine(Marshal.load(Marshal.dump(new_resource.starton)), pre: " started ", connector: " or "),
+      :stopon => combine(Marshal.load(Marshal.dump(new_resource.stopon)), pre: " stopping ", connector: " or "),
       :killmode => new_resource.killmode,
       :restart => new_resource.restart,
     )
@@ -68,7 +68,8 @@ end
 
 action :start do
   service new_resource.name do
-    action :start
+    action [ :enable, :start ]
+    supports :status => true
     provider Chef::Provider::Service::Upstart
   end
 end
@@ -78,22 +79,17 @@ action :restart do
   # to the fact that only stoping the unit forces Upstart to 
   # reload the configuration
   service new_resource.name do
-    action :stop
+    action :restart
+    supports :status => true
+    restart_command "(/sbin/stop #{new_resource.name} || true) && /sbin/start #{new_resource.name}"
     provider Chef::Provider::Service::Upstart
-  end
-  execute "sleep before #{new_resource.name} restart" do
-    command "sleep 2"
-  end
-  service new_resource.name do
-    action :start
-    provider Chef::Provider::Service::Upstart
-    #not_if "/sbin/status #{new_resource.name} | grep \"#{new_resource.name} start/running\""
   end
 end
 
 action :stop do
   service new_resource.name do
     action :stop
+    supports :status => true
     provider Chef::Provider::Service::Upstart
   end
 end

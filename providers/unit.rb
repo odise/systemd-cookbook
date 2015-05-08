@@ -10,7 +10,7 @@ def reload()
   cmdStr = '/bin/systemctl --system daemon-reload'
   cmd = Mixlib::ShellOut.new(cmdStr)
   cmd.run_command
-  Chef::Log.debug "rabbitmq_user_exists?: #{cmd.stdout}"
+  Chef::Log.debug "reload(): #{cmd.stdout}"
   begin
     cmd.error!
     true
@@ -49,14 +49,14 @@ action :add do
       :description => new_resource.description,
       :timeoutstartsec => new_resource.timeoutstartsec,
       :execreload => new_resource.execreload,
-      :requires => new_resource.requires,
-      :before => new_resource.before,
-      :after => new_resource.after,
-      :bindsto => new_resource.bindsto,
-      :wants => new_resource.wants,
-      :partof=> new_resource.partof,
+      :requires => combine(Marshal.load(Marshal.dump(new_resource.requires)), post: ".service", connector: " "),
+      :before => combine(Marshal.load(Marshal.dump(new_resource.before)), post: ".service", connector: " "),
+      :after => combine(Marshal.load(Marshal.dump(new_resource.after)), post: ".service", connector: " "),
+      :bindsto => combine(Marshal.load(Marshal.dump(new_resource.bindsto)), post: ".service", connector: " "),
+      :wants => combine(Marshal.load(Marshal.dump(new_resource.wants)), post: ".service", connector: " "),
+      :partof=> combine(Marshal.load(Marshal.dump(new_resource.partof)), post: ".service", connector: " "),
       :killmode => new_resource.killmode,
-      :restart => new_resource.restart,
+      :restart => new_resource.restart
     )
     cookbook "systemd"
     action :create
