@@ -1,6 +1,6 @@
 systemd-cookbook
 ==========
-Chef cookbook to create [Systemd service unit](http://www.freedesktop.org/software/systemd/man/systemd.service.html) files.
+Chef cookbook to create [Systemd service unit](http://www.freedesktop.org/software/systemd/man/systemd.service.html) files and Upstart config files.
 
 Requirements
 ------------
@@ -21,7 +21,7 @@ Attributes
 Usage
 -----
 
-Define the unit file as a ~systemd_unit` resource in your cookbook. Have a look at the [unit LWRP](https://github.com/odise/systemd-cookbook/blob/master/resources/unit.rb) for parameters implemented at the moment.
+Define the unit file as a `systemd_unit` resource in your cookbook. Have a look at the [unit LWRP](https://github.com/odise/systemd-cookbook/blob/master/resources/unit.rb) for parameters implemented at the moment.
 
 ```
 execute 'systemctl-daemon-reload' do
