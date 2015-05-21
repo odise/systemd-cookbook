@@ -48,6 +48,7 @@ action :add do
       :stopon => combine(Marshal.load(Marshal.dump(new_resource.stopon)), pre: " stopping ", connector: " or "),
       :killmode => new_resource.killmode,
       :restart => new_resource.restart,
+      :oneshot => new_resource.oneshot,
     )
     cookbook "systemd"
     action :create

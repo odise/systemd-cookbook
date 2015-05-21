@@ -20,6 +20,7 @@ attribute :execstop, :kind_of => String, :required => false
 attribute :execreload, :kind_of => String, :required => false
 attribute :killmode, :kind_of => String, :required => false
 attribute :restart, :kind_of => String, :required => false, :equal_to => ['no', 'on-failure', 'on-abnormal', 'on-watchdog', 'on-abort', 'always']
+attribute :oneshot, :kind_of => [TrueClass, FalseClass], :required => false, :default => false
 
 # activate the service
 attribute :activate, :kind_of => [TrueClass, FalseClass], :required => false, :default => false

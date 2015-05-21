@@ -7,6 +7,10 @@ start on <%= @starton %>
 stop on <%= @stopon %>
 <% end %>
 
+<% if @oneshot -%>
+task
+<% end %>
+
 #expect fork
 <% if @restart != 'no' -%>
 <% if @timeoutstartsec -%>

@@ -56,7 +56,8 @@ action :add do
       :wants => combine(Marshal.load(Marshal.dump(new_resource.wants)), post: ".service", connector: " "),
       :partof=> combine(Marshal.load(Marshal.dump(new_resource.partof)), post: ".service", connector: " "),
       :killmode => new_resource.killmode,
-      :restart => new_resource.restart
+      :restart => new_resource.restart,
+      :oneshot => new_resource.oneshot,
     )
     cookbook "systemd"
     action :create

@@ -20,6 +20,9 @@ Before=<%= @before %>
 <% end %>
 
 [Service]
+<% if @oneshot -%>
+Type=oneshot
+<% end %>
 <% if @user -%>
 User=<%= @user %>
 <% end %>
