@@ -4,8 +4,13 @@ def combine(input, pre: "", post: "", connector: "")
     return 
   end
   out = input.map! { |element|
-     pre + element + post
+    if element.length > 0
+      pre + element + post
+    else
+      ""
+    end
   }
+  out.delete("")
   return out.join(connector)
 end
 
